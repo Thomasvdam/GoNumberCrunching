@@ -6,6 +6,64 @@ import (
   "math/big"
 )
 
+/* Functions as a wrapper for the Factorial function,
+ * writes output to designated channel.
+ */
+func AddFactorial(x *big.Int, ch chan * big.Int) {
+  ch <- Factorial(x)
+}
+
+/* Functions as a wrapper for the BigSqrt function,
+ * writes output to designated channel.
+ */
+func AddSqrt(x *big.Int, ch chan *big.Int) {
+  ch <- SqrtBig(x)
+}
+
+// Where the magic happens.
+func main() {
+  // Create the initial set and a set to store all found numbers
+  initialNumbers := set.New(4)
+  allNumbers := set.New()
+
+  // Create a channel and add the set to it as big.Ints
+  channel := make(chan *big.Int, 100)
+  for !initialNumbers.IsEmpty() {
+    x := initialNumbers.Pop()
+    temp := x.(int)
+    i := int64(temp)
+    bigInt := big.NewInt(i)
+    channel <- bigInt
+  }
+
+  // Loop while 5 is not in the set
+  for {
+    if allNumbers.Has(big.NewInt(5).String()) {
+      break
+    }
+
+    // Get the next value from the channel
+    nextNumber := <- channel
+
+    // If it has already been found, skip it
+    if allNumbers.Has(nextNumber.String()) || nextNumber.Cmp(big.NewInt(3)) <= 0 {
+      continue
+    }
+    // Else add it to the found numbers
+    allNumbers.Add(nextNumber.String())
+    //fmt.Println(nextNumber)
+
+    // Start individual threads for the factorial and root
+    if nextNumber.Cmp(big.NewInt(100000)) <= 0 {
+      go AddFactorial(nextNumber, channel)
+    }
+    go AddSqrt(nextNumber, channel)
+  }
+
+  fmt.Println(allNumbers)
+
+}
+
 /* Source: peterSO on stackoverflow
  * returns the factorial of a big.Int as a big.Int.
  */
@@ -47,30 +105,6 @@ func SqrtBig(n *big.Int) (x *big.Int) {
     px.Set(x)
     x.Set(&nx)
   }
-fmt.Println(x)
+
   return
-}
-
-func main() {
-  allNumbers := set.New(4)
-
-  channel := make(chan *big.Int, 100)
-  channel <- big.NewInt(4)
-
-  for !allNumbers.Has(5) {
-    nextNumber := <- channel
-    go AddFactorial(nextNumber, channel)
-    go AddSqrt(nextNumber, channel)
-  }
-
-  fmt.Println(allNumbers)
-
-}
-
-func AddFactorial(x *big.Int, ch chan * big.Int) {
-  ch <- Factorial(x)
-}
-
-func AddSqrt(x *big.Int, ch chan *big.Int) {
-  ch <- SqrtBig(x)
 }
