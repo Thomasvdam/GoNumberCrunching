@@ -8,7 +8,7 @@ At the moment it is able to find at least 50 solutions (52 if you include 1 and 
 
 1. Implement the Sqrt in such a way that it uses the SqrtBig if the number is too big, but otherwise use Sqrt. This will require the use of two channels. Select statement might be helpful here.
 
-2. Clear up the formatting for the operator paths, these are not very clear at the moment. Probably better to collapse similar operands.
+2. Clear up the formatting for the operator paths, these are not very clear at the moment. Probably better to collapse similar operands. For now it outputs a string that can be copy pasted into python to check, granted that it does not overflow.
 
 ## Known Issues
 

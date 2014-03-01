@@ -11,13 +11,14 @@ import (
 type crunchedNumber struct {
   n *big.Int
   how string
+  end string
 }
 
 /* Functions as a wrapper for the Factorial function,
  * writes output to designated channel.
  */
 func AddFactorial(x *crunchedNumber, ch chan *crunchedNumber) {
-  temp := &crunchedNumber{Factorial(x.n), (x.how + "Fact ")}
+  temp := &crunchedNumber{Factorial(x.n), ("factorial(floor(" + x.how), (x.end + "))")}
   ch <- temp
 }
 
@@ -25,7 +26,7 @@ func AddFactorial(x *crunchedNumber, ch chan *crunchedNumber) {
  * writes output to designated channel.
  */
 func AddSqrt(x *crunchedNumber, ch chan *crunchedNumber) {
-  temp := &crunchedNumber{SqrtBig(x.n), (x.how + "Sqrt ")}
+  temp := &crunchedNumber{SqrtBig(x.n), ("sqrt(" + x.how), (x.end + ")")}
   ch <- temp
 }
 
@@ -44,13 +45,13 @@ func main() {
     x := initialNumbers.Pop()
     temp := x.(int)
     i := int64(temp)
-    firstNumber := &crunchedNumber{big.NewInt(i), ""}
+    firstNumber := &crunchedNumber{big.NewInt(i), "", "4"}
     channel <- firstNumber
   }
 
-  // Loop while less then 50 values have been found
+  // Loop while less then 30 values have been found
   found := 4
-  for found < 50 {
+  for found < 30 {
 
     // Get the next value from the channel (blocks if none are available, panics
     // if none will become available either)
@@ -84,7 +85,7 @@ func main() {
     value, ok := crunchedNumbers[x]
     if ok {
       fmt.Println("Check :", x)
-      fmt.Println("By doing :", value.how)
+      fmt.Println("By doing :", value.how + value.end)
     }
   }
 }
