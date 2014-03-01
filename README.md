@@ -2,13 +2,13 @@
 
 A simple Go approach to solving the number cruncher pilot case for the Heuristics course from the Minor Programmeren at the UvA. Still under construction.
 
-At the moment it is able to find at least 50 solutions (52 if you include 1 and 2) and display the operator path.
+At the moment it is able to find at least 50 solutions (52 if you include 1 and 2) and display the operator path. Biggest problem with this is that it is rather hard to check, most calculators can't handle this. :(
 
 ## To Do
 
 1. Implement the Sqrt in such a way that it uses the SqrtBig if the number is too big, but otherwise use Sqrt. This will require the use of two channels. Select statement might be helpful here.
 
-2. Clear up the formatting for the operator paths, these are not very clear at the moment.
+2. Clear up the formatting for the operator paths, these are not very clear at the moment. Probably better to collapse similar operands.
 
 ## Known Issues
 
