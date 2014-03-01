@@ -49,9 +49,9 @@ func main() {
     channel <- firstNumber
   }
 
-  // Loop while less then 30 values have been found
+  // Loop while less then 50 values have been found
   found := 4
-  for found < 30 {
+  for found < 50 {
 
     // Get the next value from the channel (blocks if none are available, panics
     // if none will become available either)

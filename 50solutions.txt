@@ -1,0 +1,92 @@
+Check : 3
+By doing : sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))
+Check : 4
+By doing : 4
+Check : 5
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))
+Check : 6
+By doing : factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))
+Check : 7
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))))))))))))))))
+Check : 8
+By doing : sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))))))))))))))))))))
+Check : 9
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))))))))))))))))))))
+Check : 10
+By doing : sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))
+Check : 12
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))))))))))))))))))))))))))))))))
+Check : 13
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))))))))))))))))))))))))))))
+Check : 14
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))))))
+Check : 15
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))))))))))))))))))))))))))))
+Check : 16
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))))))))))))))))))))))
+Check : 17
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))))))))))))))))
+Check : 18
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))))))))))))))))))))))))))
+Check : 19
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))))))))))))))))
+Check : 21
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))
+Check : 22
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))))))))))))))))))))))))))))))
+Check : 23
+By doing : sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))
+Check : 24
+By doing : factorial(floor(4))
+Check : 25
+By doing : sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))
+Check : 26
+By doing : sqrt(factorial(floor(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))))
+Check : 29
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))))))))))))))))))
+Check : 30
+By doing : sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))
+Check : 31
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(sqrt(factorial(floor(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))))))))
+Check : 32
+By doing : sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))))))))))))))))))
+Check : 34
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))))))))))))))))
+Check : 35
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))))))
+Check : 36
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))))))))))))
+Check : 37
+By doing : sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))))))))
+Check : 41
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))
+Check : 43
+By doing : sqrt(sqrt(factorial(floor(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))
+Check : 44
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))
+Check : 46
+By doing : sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(factorial(floor(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))))))))))
+Check : 47
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))))))))))))))))))))))))))))))))))))
+Check : 49
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))))))))))))))))))))
+Check : 50
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))
+Check : 53
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))))))))))))))))))))))
+Check : 63
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(factorial(floor(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))
+Check : 65
+By doing : sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))))))
+Check : 70
+By doing : sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))))
+Check : 73
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))))))))))))))))))))
+Check : 74
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(factorial(floor(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4))))))))))))))))))))))))))))))))))))))))))
+Check : 77
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(factorial(floor(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))))))))))))))))))
+Check : 81
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(factorial(floor(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))))))))))
+Check : 94
+By doing : sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(sqrt(sqrt(sqrt(sqrt(factorial(floor(factorial(floor(4)))))))))))))))))))))))))))))))))
