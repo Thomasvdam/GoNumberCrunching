@@ -49,9 +49,9 @@ func main() {
     channel <- firstNumber
   }
 
-  // Loop while less then 50 values have been found
-  found := 4
-  for found < 50 {
+  // Loop while less then 60 values have been found
+  found := 3
+  for found < 70 {
 
     // Get the next value from the channel (blocks if none are available, panics
     // if none will become available either)
@@ -68,7 +68,7 @@ func main() {
     temp := nextNumber.n.Int64()
     if 0 < temp && temp <= 100 {
       found++
-      fmt.Println(nextNumber.n)
+      fmt.Println(nextNumber.n, " as element : " ,found)
       crunchedNumbers[int(temp)] = nextNumber
     }   
 
@@ -81,13 +81,20 @@ func main() {
   }
 
   // End of program, check which numbers have been found and print those.
+  foundSlice := make([]int, 100)
+  x2 := 0
   for x := 1; x <= 100; x++ {
     value, ok := crunchedNumbers[x]
     if ok {
+      foundSlice[x2] = x
+      x2++
       fmt.Println("Check :", x)
       fmt.Println("By doing :", value.how + value.end)
     }
   }
+
+  // Print all found numbers at the end
+  fmt.Println(foundSlice[:x2])
 }
 
 /* Source: peterSO on stackoverflow
