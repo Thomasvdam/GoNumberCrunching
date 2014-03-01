@@ -6,18 +6,27 @@ import (
   "math/big"
 )
 
+/* Stores an int and a string of the computations used
+ */
+type crunchedNumber struct {
+  n *big.Int
+  how string
+}
+
 /* Functions as a wrapper for the Factorial function,
  * writes output to designated channel.
  */
-func AddFactorial(x *big.Int, ch chan * big.Int) {
-  ch <- Factorial(x)
+func AddFactorial(x *crunchedNumber, ch chan *crunchedNumber) {
+  temp := &crunchedNumber{Factorial(x.n), (x.how + "Fact")}
+  ch <- temp
 }
 
 /* Functions as a wrapper for the BigSqrt function,
  * writes output to designated channel.
  */
-func AddSqrt(x *big.Int, ch chan *big.Int) {
-  ch <- SqrtBig(x)
+func AddSqrt(x *crunchedNumber, ch chan *crunchedNumber) {
+  temp := &crunchedNumber{SqrtBig(x.n), (x.how + "Sqrt")}
+  ch <- temp
 }
 
 // Where the magic happens.
@@ -25,42 +34,55 @@ func main() {
   // Create the initial set and a set to store all found numbers
   initialNumbers := set.New(4)
   allNumbers := set.New()
+  crunchedNumbers := make(map[int]*crunchedNumber)
 
   // Create a channel and add the set to it as big.Ints
-  channel := make(chan *big.Int, 100)
+  channel := make(chan *crunchedNumber, 100)
   for !initialNumbers.IsEmpty() {
     x := initialNumbers.Pop()
     temp := x.(int)
     i := int64(temp)
-    bigInt := big.NewInt(i)
-    channel <- bigInt
+    firstNumber := &crunchedNumber{big.NewInt(i), ""}
+    channel <- firstNumber
   }
 
-  // Loop while 5 is not in the set
-  for {
-    if allNumbers.Has(big.NewInt(5).String()) {
-      break
-    }
+  found := 4
 
+  // Loop while less then 50 values have been found
+  for found < 50 {
     // Get the next value from the channel
     nextNumber := <- channel
 
     // If it has already been found, skip it
-    if allNumbers.Has(nextNumber.String()) || nextNumber.Cmp(big.NewInt(3)) <= 0 {
+    if allNumbers.Has(nextNumber.n.String()) || nextNumber.n.Cmp(big.NewInt(3)) < 0 {
       continue
     }
     // Else add it to the found numbers
-    allNumbers.Add(nextNumber.String())
-    //fmt.Println(nextNumber)
+    allNumbers.Add(nextNumber.n.String())
+
+    // Convert it to an int and check whether it is in the 0-100 range
+    // If so, add it to the crunchedNumbers map under its string
+    temp := nextNumber.n.Int64()
+    if 0 < temp && temp <= 100 {
+      found++
+      fmt.Println(nextNumber.n)
+      crunchedNumbers[int(temp)] = nextNumber
+    }   
 
     // Start individual threads for the factorial and root
-    if nextNumber.Cmp(big.NewInt(100000)) <= 0 {
+    if nextNumber.n.Cmp(big.NewInt(10000000)) <= 0 {
       go AddFactorial(nextNumber, channel)
     }
-    go AddSqrt(nextNumber, channel)
+    AddSqrt(nextNumber, channel)
   }
 
-  fmt.Println(allNumbers)
+  for x := 1; x <= 100; x++ {
+    value, ok := crunchedNumbers[x]
+    if ok {
+      fmt.Println("Check :", x)
+      fmt.Println("By doing :", value.how)
+    }
+  }
 
 }
 
