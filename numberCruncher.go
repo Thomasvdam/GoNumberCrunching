@@ -4,6 +4,15 @@ import (
   "fmt"
   "github.com/fatih/set"
   "math/big"
+  "strings"
+)
+
+/* Parameters declared here for easy tweaking
+ *
+ */
+var (
+  bigThree = big.NewInt(3)
+  bigFactorialThreshold = big.NewInt(20000)
 )
 
 /* Stores an int and a string of the computations used
@@ -11,23 +20,6 @@ import (
 type crunchedNumber struct {
   n *big.Int
   how string
-  end string
-}
-
-/* Functions as a wrapper for the Factorial function,
- * writes output to designated channel.
- */
-func AddFactorial(x *crunchedNumber, ch chan *crunchedNumber) {
-  temp := &crunchedNumber{Factorial(x.n), ("factorial(floor(" + x.how), (x.end + "))")}
-  ch <- temp
-}
-
-/* Functions as a wrapper for the BigSqrt function,
- * writes output to designated channel.
- */
-func AddSqrt(x *crunchedNumber, ch chan *crunchedNumber) {
-  temp := &crunchedNumber{SqrtBig(x.n), ("sqrt(" + x.how), (x.end + ")")}
-  ch <- temp
 }
 
 // Where the magic happens.
@@ -39,62 +31,92 @@ func main() {
   // Use a map to store the numbers we're interested in
   crunchedNumbers := make(map[int]*crunchedNumber)
 
-  // Create a channel and add the set to it
-  channel := make(chan *crunchedNumber, 100)
+  // Create two channels, one 'small' numbers and one for big ones
+  channelBig := make(chan *crunchedNumber, 100)
+  channelSmall := make(chan *crunchedNumber, 100)
+
+  // Add the first number to the small channel
   for !initialNumbers.IsEmpty() {
     x := initialNumbers.Pop()
     temp := x.(int)
     i := int64(temp)
-    firstNumber := &crunchedNumber{big.NewInt(i), "", "4"}
-    channel <- firstNumber
+    firstNumber := &crunchedNumber{big.NewInt(i), ""}
+    channelSmall <- firstNumber
   }
 
-  // Loop while less then 60 values have been found
-  found := 3
-  for found < 70 {
+  // Loop while less then 100 values have been found
+  found := 0
+  for found < 100 {
 
-    // Get the next value from the channel (blocks if none are available, panics
-    // if none will become available either)
-    nextNumber := <- channel
+    select {
+    case nextNumber := <- channelSmall:
+      // Convert it to an int and check whether it is in the 0-100 range
+      // If so, add it to the crunchedNumbers map
+      temp := nextNumber.n.Int64()
+      if 0 < temp && temp <= 100 {
+        value, ok := crunchedNumbers[int(temp)]
+        if !ok {
+          found++
+          fmt.Println(nextNumber.n, " as element : " ,found)
+          crunchedNumbers[int(temp)] = nextNumber
+        } else {
+          oldNumber := strings.NewReader(value.how)
+          newNumber := strings.NewReader(nextNumber.how)
+          if oldNumber.Len() > newNumber.Len() {
+            crunchedNumbers[int(temp)] = nextNumber
+          }
+        }
+      }
 
-    // If it has already been found, skip it, else add it to numbers found
-    if allNumbers.Has(nextNumber.n.String()) || nextNumber.n.Cmp(big.NewInt(3)) < 0 {
-      continue
+      // If it has already been found, skip it, else add it to numbers found
+      if allNumbers.Has(nextNumber.n.String()) || nextNumber.n.Cmp(bigThree) < 0 {
+        continue
+      }
+      allNumbers.Add(nextNumber.n.String())
+
+      go AddFactorial(nextNumber, channelBig, channelSmall)
+      AddSqrt(nextNumber, channelBig, channelSmall)
+
+    case nextNumber := <- channelBig:
+      // If it has already been found, skip it, else add it to numbers found
+      if allNumbers.Has(nextNumber.n.String()) || nextNumber.n.Cmp(bigThree) < 0 {
+        continue
+      }
+      allNumbers.Add(nextNumber.n.String())
+
+      AddSqrt(nextNumber, channelBig, channelSmall)
     }
-    allNumbers.Add(nextNumber.n.String())
 
-    // Convert it to an int and check whether it is in the 0-100 range
-    // If so, add it to the crunchedNumbers map
-    temp := nextNumber.n.Int64()
-    if 0 < temp && temp <= 100 {
-      found++
-      fmt.Println(nextNumber.n, " as element : " ,found)
-      crunchedNumbers[int(temp)] = nextNumber
-    }   
-
-    // If the number is factorialable fire it off in a goroutine
-    if nextNumber.n.Cmp(big.NewInt(10000000)) <= 0 {
-      go AddFactorial(nextNumber, channel)
-    }
-    // Blocking Sqrt because that leads to better results for some reason that is beyond me
-    AddSqrt(nextNumber, channel)
   }
 
   // End of program, check which numbers have been found and print those.
   foundSlice := make([]int, 100)
-  x2 := 0
-  for x := 1; x <= 100; x++ {
-    value, ok := crunchedNumbers[x]
+  for x := 0; x < 100; x++ {
+    value, ok := crunchedNumbers[x + 1]
     if ok {
-      foundSlice[x2] = x
-      x2++
-      fmt.Println("Check :", x)
-      fmt.Println("By doing :", value.how + value.end)
+      foundSlice[x] = x + 1
+      fmt.Println("Check :", x + 1)
+      fmt.Println("By doing :", value.how)
+    } else {
+      foundSlice[x] = 0
     }
   }
 
   // Print all found numbers at the end
-  fmt.Println(foundSlice[:x2])
+  fmt.Println(foundSlice[:])
+}
+
+/* Functions as a wrapper for the Factorial function,
+ * writes output to designated channel.
+ */
+func AddFactorial(x *crunchedNumber, chBig, chSmall chan *crunchedNumber) {
+  temp := &crunchedNumber{Factorial(x.n), (x.how + "f")}
+  
+  if temp.n.Cmp(bigFactorialThreshold) <= 0 {
+    chSmall <- temp
+  } else {
+    chBig <- temp
+  }
 }
 
 /* Source: peterSO on stackoverflow
@@ -116,10 +138,23 @@ func Factorial(n *big.Int) (result *big.Int) {
   return
 }
 
+/* Functions as a wrapper for the BigSqrt function,
+ * writes output to designated channel.
+ */
+func AddSqrt(x *crunchedNumber, chBig, chSmall chan *crunchedNumber) {
+  temp := &crunchedNumber{SqrtBig(x.n), (x.how + "s")}
+  
+  if temp.n.Cmp(bigFactorialThreshold) <= 0 {
+    chSmall <- temp
+  } else {
+    chBig <- temp
+  }
+}
+
 /* Source: github.com/cznic/mathutil
  * Returns the floor of the square root of a big.Int as a big.Int
  */
-func SqrtBig(n *big.Int) (x *big.Int) {
+func SqrtBig(n *big.Int) (result *big.Int) {
   switch n.Sign() {
   case -1:
     panic(-1)
@@ -128,16 +163,59 @@ func SqrtBig(n *big.Int) (x *big.Int) {
   }
 
   var px, nx big.Int
-  x = big.NewInt(0)
-  x.SetBit(x, n.BitLen()/2+1, 1)
+  result = big.NewInt(0)
+  result.SetBit(result, n.BitLen()/2+1, 1)
   for {
-    nx.Rsh(nx.Add(x, nx.Div(n, x)), 1)
-    if nx.Cmp(x) == 0 || nx.Cmp(&px) == 0 {
+    nx.Rsh(nx.Add(result, nx.Div(n, result)), 1)
+    if nx.Cmp(result) == 0 || nx.Cmp(&px) == 0 {
       break
     }
-    px.Set(x)
-    x.Set(&nx)
+    px.Set(result)
+    result.Set(&nx)
   }
 
   return
+}
+
+/* Functions as a wrapper for the FactorialSqrt function,
+ * writes output to designated channel.
+ */
+func AddFactorialSqrt(x *crunchedNumber, chBig, chSmall chan *crunchedNumber) {
+  temp := &crunchedNumber{FactorialSqrt(x.n), (x.how + "fs")}
+  
+  if temp.n.Cmp(bigFactorialThreshold) <= 0 {
+    chSmall <- temp
+  } else {
+    chBig <- temp
+  }
+}
+
+/* Rather than calculating the entire factorial, calculate the sqrt immediately
+ * of the result of the factorial
+ */
+func FactorialSqrt(n *big.Int) (result *big.Int) {
+  result = new(big.Int)
+
+  switch n.Cmp(&big.Int{}) {
+  case -1, 0:
+    result.SetInt64(1)
+  default:
+    result.Set(n)
+    var one big.Int
+    one.SetInt64(1)
+    result.Mul(result, FactorialSqrt(SqrtBig(n.Sub(n, &one))))
+  }
+
+  return
+}
+
+/* Parses the instruction sequence of the crunchedNumber and outputs a more
+ * human-friendly format.
+ */
+func PrintRoute(r *crunchedNumber) {
+  reader := strings.NewReader(r.how)
+  for i := 0; i < reader.Len(); i++ {
+    fmt.Print(r.how[i])
+  }
+  fmt.Print("\n")
 }
