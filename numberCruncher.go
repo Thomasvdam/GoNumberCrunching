@@ -218,6 +218,8 @@ func PrintRoute(r *crunchedNumber) {
 
   sqrt := false
   sqrtCount := 0
+  fact := false
+  factCount := 0
   path := "4 "
 
   for i := 0; i < reader.Len(); i++ {
@@ -225,15 +227,24 @@ func PrintRoute(r *crunchedNumber) {
     case 'f':
       if sqrt {
         sqrt = false
-        if sqrtCount > 1 {
-          path = path + strconv.Itoa(sqrtCount) + "√ "
-        } else {
-          path = path + "√ "
-        }
+        path = path + strconv.Itoa(sqrtCount) + "√"
         sqrtCount = 0
       }
-      path = path + "!"
+      if fact {
+        factCount++
+      } else {
+        path = path + " "
+        factCount = 1
+        fact = true
+      }
+
     case 's':
+      if fact {
+        fact = false
+        path = path + strconv.Itoa(factCount) + "!"
+        factCount = 0
+      }
+
       if sqrt {
         sqrtCount++
       } else {
@@ -243,8 +254,13 @@ func PrintRoute(r *crunchedNumber) {
       }
     }
   }
+
   if sqrt {
     path = path + strconv.Itoa(sqrtCount) + "√"
   }
+  if fact {
+    path = path + strconv.Itoa(factCount) + "!"
+  }
+
   fmt.Println(path)
 }
