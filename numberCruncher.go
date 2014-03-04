@@ -5,13 +5,14 @@ import (
   "github.com/fatih/set"
   "math/big"
   "strings"
+  "strconv"
 )
 
 /* Parameters declared here for easy tweaking
  *
  */
 var (
-  bigThree = big.NewInt(3)
+  bigTwo = big.NewInt(2)
   bigFactorialThreshold = big.NewInt(20000)
 )
 
@@ -57,7 +58,7 @@ func main() {
         value, ok := crunchedNumbers[int(temp)]
         if !ok {
           found++
-          fmt.Println(nextNumber.n, " as element : " ,found)
+          // fmt.Println(nextNumber.n, " as element : " ,found)
           crunchedNumbers[int(temp)] = nextNumber
         } else {
           oldNumber := strings.NewReader(value.how)
@@ -69,7 +70,7 @@ func main() {
       }
 
       // If it has already been found, skip it, else add it to numbers found
-      if allNumbers.Has(nextNumber.n.String()) || nextNumber.n.Cmp(bigThree) < 0 {
+      if allNumbers.Has(nextNumber.n.String()) {
         continue
       }
       allNumbers.Add(nextNumber.n.String())
@@ -79,7 +80,7 @@ func main() {
 
     case nextNumber := <- channelBig:
       // If it has already been found, skip it, else add it to numbers found
-      if allNumbers.Has(nextNumber.n.String()) || nextNumber.n.Cmp(bigThree) < 0 {
+      if allNumbers.Has(nextNumber.n.String()) {
         continue
       }
       allNumbers.Add(nextNumber.n.String())
@@ -95,15 +96,15 @@ func main() {
     value, ok := crunchedNumbers[x + 1]
     if ok {
       foundSlice[x] = x + 1
-      fmt.Println("Check :", x + 1)
-      fmt.Println("By doing :", value.how)
+      fmt.Print(x + 1, " : ")
+      PrintRoute(value)
     } else {
       foundSlice[x] = 0
     }
   }
 
   // Print all found numbers at the end
-  fmt.Println(foundSlice[:])
+  //fmt.Println(foundSlice[:])
 }
 
 /* Functions as a wrapper for the Factorial function,
@@ -143,7 +144,7 @@ func Factorial(n *big.Int) (result *big.Int) {
  */
 func AddSqrt(x *crunchedNumber, chBig, chSmall chan *crunchedNumber) {
   temp := &crunchedNumber{SqrtBig(x.n), (x.how + "s")}
-  
+
   if temp.n.Cmp(bigFactorialThreshold) <= 0 {
     chSmall <- temp
   } else {
@@ -214,8 +215,36 @@ func FactorialSqrt(n *big.Int) (result *big.Int) {
  */
 func PrintRoute(r *crunchedNumber) {
   reader := strings.NewReader(r.how)
+
+  sqrt := false
+  sqrtCount := 0
+  path := "4 "
+
   for i := 0; i < reader.Len(); i++ {
-    fmt.Print(r.how[i])
+    switch r.how[i] {
+    case 'f':
+      if sqrt {
+        sqrt = false
+        if sqrtCount > 1 {
+          path = path + strconv.Itoa(sqrtCount) + "√ "
+        } else {
+          path = path + "√ "
+        }
+        sqrtCount = 0
+      }
+      path = path + "!"
+    case 's':
+      if sqrt {
+        sqrtCount++
+      } else {
+        path = path + " "
+        sqrtCount = 1
+        sqrt = true
+      }
+    }
   }
-  fmt.Print("\n")
+  if sqrt {
+    path = path + strconv.Itoa(sqrtCount) + "√"
+  }
+  fmt.Println(path)
 }
