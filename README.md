@@ -2,17 +2,19 @@
 
 A simple Go approach to solving the number cruncher pilot case for the Heuristics course from the Minor Programmeren at the UvA. Still under construction.
 
-At the moment it is able to find at least 50 solutions (52 if you include 1 and 2) and display the operator path. Biggest problem with this is that it is rather hard to check, most calculators can't handle this. :(
+At the moment it is able to find solutions for all integers in the range [1:100] and display the operator path. Biggest problem with this is that it is rather hard to check, most calculators can't handle this. :(
 
 ## To Do
 
-1. Implement the Sqrt in such a way that it uses the SqrtBig if the number is too big, but otherwise use Sqrt. This will require the use of two channels. Select statement might be helpful here.
+1. Implement the Sqrt in such a way that it uses the SqrtBig if the number is too big, but otherwise use Sqrt.
 
-2. Clear up the formatting for the operator paths, these are not very clear at the moment. Probably better to collapse similar operands. For now it outputs a string that can be copy pasted into python to check, granted that it does not overflow.
+2. Repair FactorialSqrt (see issue 1)
 
 ## Known Issues
 
-1. Currently the BigSqrt function automatically floors the result. This might turn out to be undesirable.
+0. (Not really an issue) Floor is not displayed in the operator path. This was a conscious decision but it might be useful to put it in after all.
+
+1. FactorialSqrt is currently not working, or at least not working as desired. Perhaps an idea is to add a third channel which receives numbers that are too big for factorial but may be doable through Roland's method.
 
 2. I do not completely understand how the concurrency works. In this implementation I think it fires of factorials in a seperate 'thread' but blocks at the Sqrts. Why this is better than making both non-blocking is something I do not understand. T_T
 
