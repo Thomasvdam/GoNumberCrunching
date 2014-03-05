@@ -8,7 +8,7 @@ At the moment it is able to find solutions for all integers in the range [1:100]
 
 1. Implement the Sqrt in such a way that it uses the SqrtBig if the number is too big, but otherwise use Sqrt.
 
-2. Repair FactorialSqrt (see issue 1)
+2. Repair FactorialSqrt (see issue 2)
 
 ## Known Issues
 
