@@ -58,12 +58,13 @@ func main() {
         value, ok := crunchedNumbers[int(temp)]
         if !ok {
           found++
-          // fmt.Println(nextNumber.n, " as element : " ,found)
+          fmt.Println(nextNumber.n, " as element : " ,found)
           crunchedNumbers[int(temp)] = nextNumber
         } else {
           oldNumber := strings.NewReader(value.how)
           newNumber := strings.NewReader(nextNumber.how)
           if oldNumber.Len() > newNumber.Len() {
+            fmt.Println("Replaced : ", nextNumber.n, nextNumber.how)
             crunchedNumbers[int(temp)] = nextNumber
           }
         }
@@ -104,7 +105,7 @@ func main() {
   }
 
   // Print all found numbers at the end
-  //fmt.Println(foundSlice[:])
+  fmt.Println(foundSlice[:])
 }
 
 /* Functions as a wrapper for the Factorial function,

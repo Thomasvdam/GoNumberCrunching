@@ -10,6 +10,8 @@ At the moment it is able to find solutions for all integers in the range [1:100]
 
 2. Repair FactorialSqrt (see issue 2)
 
+3. Fix path notation.
+
 ## Known Issues
 
 0. (Not really an issue) Floor is not displayed in the operator path. This was a conscious decision but it might be useful to put it in after all.
