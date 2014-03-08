@@ -2,233 +2,143 @@ package main
 
 import (
   "fmt"
-  "github.com/fatih/set"
+  "flag"
   "math/big"
   "strings"
   "strconv"
+  "github.com/fatih/set"
+  "github.com/Arcania0311/numberCruncher/crunch"
 )
 
-/* Parameters declared here for easy tweaking
- *
- */
 var (
-  bigTwo = big.NewInt(2)
-  bigFactorialThreshold = big.NewInt(20000)
+  printArray bool
+  printProgress bool
+  goal int
 )
-
-/* Stores an int and a string of the computations used
- */
-type crunchedNumber struct {
-  n *big.Int
-  how string
-}
 
 // Where the magic happens.
 func main() {
+  // Parse command line flags
+  flag.BoolVar(&printArray, "array", false, "Output an array of path lengths rather than all paths.")
+  flag.BoolVar(&printProgress, "progress", false, "Display notification when a new int has been found.")
+  flag.IntVar(&goal, "goal", 100, "How many integers should be found before aborting.")
+  flag.Parse()
+
   // Create the initial set and a set to store all found numbers
   initialNumbers := set.New(4)
   allNumbers := set.New()
 
   // Use a map to store the numbers we're interested in
-  crunchedNumbers := make(map[int]*crunchedNumber)
+  crunchedNumbers := make(map[int]*crunch.CrunchedNumber)
 
   // Create two channels, one 'small' numbers and one for big ones
-  channelBig := make(chan *crunchedNumber, 100)
-  channelSmall := make(chan *crunchedNumber, 100)
+  channelBig := make(chan *crunch.CrunchedNumber, 100)
+  channelSmall := make(chan *crunch.CrunchedNumber, 100)
 
   // Add the first number to the small channel
   for !initialNumbers.IsEmpty() {
     x := initialNumbers.Pop()
     temp := x.(int)
     i := int64(temp)
-    firstNumber := &crunchedNumber{big.NewInt(i), ""}
+    firstNumber := &crunch.CrunchedNumber{big.NewInt(i), ""}
     channelSmall <- firstNumber
   }
 
   // Loop while less then 100 values have been found
   found := 0
-  for found < 100 {
+  for found < goal {
 
     select {
     case nextNumber := <- channelSmall:
       // Convert it to an int and check whether it is in the 0-100 range
       // If so, add it to the crunchedNumbers map
-      temp := nextNumber.n.Int64()
+      temp := nextNumber.N.Int64()
       if 0 < temp && temp <= 100 {
         value, ok := crunchedNumbers[int(temp)]
         if !ok {
           found++
-          fmt.Println(nextNumber.n, " as element : " ,found)
+          if printProgress {
+            fmt.Println(nextNumber.N, " as element : " ,found)
+          }
           crunchedNumbers[int(temp)] = nextNumber
         } else {
-          oldNumber := strings.NewReader(value.how)
-          newNumber := strings.NewReader(nextNumber.how)
+          oldNumber := strings.NewReader(value.How)
+          newNumber := strings.NewReader(nextNumber.How)
           if oldNumber.Len() > newNumber.Len() {
-            fmt.Println("Replaced : ", nextNumber.n, nextNumber.how)
             crunchedNumbers[int(temp)] = nextNumber
           }
         }
       }
 
       // If it has already been found, skip it, else add it to numbers found
-      if allNumbers.Has(nextNumber.n.String()) {
+      if allNumbers.Has(nextNumber.N.String()) {
         continue
       }
-      allNumbers.Add(nextNumber.n.String())
+      allNumbers.Add(nextNumber.N.String())
 
-      go AddFactorial(nextNumber, channelBig, channelSmall)
-      AddSqrt(nextNumber, channelBig, channelSmall)
+      go crunch.AddFactorial(nextNumber, channelBig, channelSmall)
+      crunch.AddSqrt(nextNumber, channelBig, channelSmall)
 
     case nextNumber := <- channelBig:
       // If it has already been found, skip it, else add it to numbers found
-      if allNumbers.Has(nextNumber.n.String()) {
+      if allNumbers.Has(nextNumber.N.String()) {
         continue
       }
-      allNumbers.Add(nextNumber.n.String())
+      allNumbers.Add(nextNumber.N.String())
 
-      AddSqrt(nextNumber, channelBig, channelSmall)
+      crunch.AddSqrt(nextNumber, channelBig, channelSmall)
     }
 
   }
 
-  // End of program, check which numbers have been found and print those.
+  // End of program
   foundSlice := make([]int, 100)
   for x := 0; x < 100; x++ {
     value, ok := crunchedNumbers[x + 1]
     if ok {
-      foundSlice[x] = x + 1
-      fmt.Print(x + 1, " : ")
-      PrintRoute(value)
+      path, pathLength := PrintRoute(value)
+      if !printArray {
+        fmt.Println(x + 1, path)
+      }
+      foundSlice[x] = pathLength
     } else {
       foundSlice[x] = 0
     }
   }
-
-  // Print all found numbers at the end
-  fmt.Println(foundSlice[:])
-}
-
-/* Functions as a wrapper for the Factorial function,
- * writes output to designated channel.
- */
-func AddFactorial(x *crunchedNumber, chBig, chSmall chan *crunchedNumber) {
-  temp := &crunchedNumber{Factorial(x.n), (x.how + "f")}
   
-  if temp.n.Cmp(bigFactorialThreshold) <= 0 {
-    chSmall <- temp
-  } else {
-    chBig <- temp
-  }
-}
-
-/* Source: peterSO on stackoverflow
- * returns the factorial of a big.Int as a big.Int.
- */
-func Factorial(n *big.Int) (result *big.Int) {
-  result = new(big.Int)
-
-  switch n.Cmp(&big.Int{}) {
-  case -1, 0:
-    result.SetInt64(1)
-  default:
-    result.Set(n)
-    var one big.Int
-    one.SetInt64(1)
-    result.Mul(result, Factorial(n.Sub(n, &one)))
-  }
-
-  return
-}
-
-/* Functions as a wrapper for the BigSqrt function,
- * writes output to designated channel.
- */
-func AddSqrt(x *crunchedNumber, chBig, chSmall chan *crunchedNumber) {
-  temp := &crunchedNumber{SqrtBig(x.n), (x.how + "s")}
-
-  if temp.n.Cmp(bigFactorialThreshold) <= 0 {
-    chSmall <- temp
-  } else {
-    chBig <- temp
-  }
-}
-
-/* Source: github.com/cznic/mathutil
- * Returns the floor of the square root of a big.Int as a big.Int
- */
-func SqrtBig(n *big.Int) (result *big.Int) {
-  switch n.Sign() {
-  case -1:
-    panic(-1)
-  case 0:
-    return big.NewInt(0)
-  }
-
-  var px, nx big.Int
-  result = big.NewInt(0)
-  result.SetBit(result, n.BitLen()/2+1, 1)
-  for {
-    nx.Rsh(nx.Add(result, nx.Div(n, result)), 1)
-    if nx.Cmp(result) == 0 || nx.Cmp(&px) == 0 {
-      break
+  if printArray {
+    // Print all found pathlengths at the end, wee bit hacky
+    fmt.Print("[")
+    for i, v := range foundSlice {
+      fmt.Print(v)
+      if i != 99 {
+        fmt.Print(", ")      
+      }
     }
-    px.Set(result)
-    result.Set(&nx)
-  }
-
-  return
-}
-
-/* Functions as a wrapper for the FactorialSqrt function,
- * writes output to designated channel.
- */
-func AddFactorialSqrt(x *crunchedNumber, chBig, chSmall chan *crunchedNumber) {
-  temp := &crunchedNumber{FactorialSqrt(x.n), (x.how + "fs")}
-  
-  if temp.n.Cmp(bigFactorialThreshold) <= 0 {
-    chSmall <- temp
-  } else {
-    chBig <- temp
+    fmt.Println("]")
   }
 }
 
-/* Rather than calculating the entire factorial, calculate the sqrt immediately
- * of the result of the factorial
+/* Returns a string with a human friendly version of the path, plus the length
+ * of the path.
  */
-func FactorialSqrt(n *big.Int) (result *big.Int) {
-  result = new(big.Int)
-
-  switch n.Cmp(&big.Int{}) {
-  case -1, 0:
-    result.SetInt64(1)
-  default:
-    result.Set(n)
-    var one big.Int
-    one.SetInt64(1)
-    result.Mul(result, FactorialSqrt(SqrtBig(n.Sub(n, &one))))
-  }
-
-  return
-}
-
-/* Parses the instruction sequence of the crunchedNumber and outputs a more
- * human-friendly format.
- */
-func PrintRoute(r *crunchedNumber) {
-  reader := strings.NewReader(r.how)
+func PrintRoute(r *crunch.CrunchedNumber) (string, int) {
+  reader := strings.NewReader(r.How)
 
   sqrt := false
   sqrtCount := 0
   fact := false
   factCount := 0
-  path := "4 "
+  path := ": 4"
+  pathLength := 0
 
   for i := 0; i < reader.Len(); i++ {
-    switch r.how[i] {
+    switch r.How[i] {
     case 'f':
       if sqrt {
         sqrt = false
-        path = path + strconv.Itoa(sqrtCount) + "√"
+        path = path + strconv.Itoa(sqrtCount) + "s" + " 1f"
+        pathLength += sqrtCount + 1
         sqrtCount = 0
       }
       if fact {
@@ -243,6 +153,7 @@ func PrintRoute(r *crunchedNumber) {
       if fact {
         fact = false
         path = path + strconv.Itoa(factCount) + "!"
+        pathLength += factCount
         factCount = 0
       }
 
@@ -255,13 +166,24 @@ func PrintRoute(r *crunchedNumber) {
       }
     }
   }
-
+  // Append the end of the path
   if sqrt {
-    path = path + strconv.Itoa(sqrtCount) + "√"
+    path = path + strconv.Itoa(sqrtCount) + "s"
+
+    // Hacky 'solution' for the path of 2
+    pathLength += sqrtCount
+    if pathLength != 1 {
+      pathLength++
+      path = path + " 1f"
+    }
   }
   if fact {
     path = path + strconv.Itoa(factCount) + "!"
+    pathLength += factCount
   }
 
-  fmt.Println(path)
+  // Prepend the path length
+  path = "(" + strconv.Itoa(pathLength) + ") " + path
+
+  return path, pathLength
 }
