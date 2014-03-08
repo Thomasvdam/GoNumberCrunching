@@ -10,7 +10,7 @@ At the moment it is able to find solutions for all integers in the range [1:100]
 
 2. Write a checker that takes a operator path as input, preforms those operations, and checks them against the supposed output.
 
-3. Repair FactorialSqrt (see issue 2)
+3. Repair FactorialSqrt (see issue 1)
 
 
 ## Known Issues
