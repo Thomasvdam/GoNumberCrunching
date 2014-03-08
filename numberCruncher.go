@@ -10,6 +10,8 @@ import (
   "github.com/Arcania0311/numberCruncher/crunch"
 )
 
+/* Variables used for command line parsing.
+ */
 var (
   printArray bool
   printProgress bool

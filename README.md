@@ -6,15 +6,14 @@ At the moment it is able to find solutions for all integers in the range [1:100]
 
 ## To Do
 
-1. Implement the Sqrt in such a way that it uses the SqrtBig if the number is too big, but otherwise use Sqrt.
+1. Write tests for crunch package.
 
-2. Repair FactorialSqrt (see issue 2)
+2. Write a checker that takes a operator path as input, preforms those operations, and checks them against the supposed output.
 
-3. Fix path notation.
+3. Repair FactorialSqrt (see issue 2)
+
 
 ## Known Issues
-
-0. (Not really an issue) Floor is not displayed in the operator path. This was a conscious decision but it might be useful to put it in after all.
 
 1. FactorialSqrt is currently not working, or at least not working as desired. Perhaps an idea is to add a third channel which receives numbers that are too big for factorial but may be doable through Roland's method.
 
